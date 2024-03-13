@@ -12,6 +12,7 @@ namespace FlightPlanner.Controllers
         {
             _context = context;
         }
+
         [HttpPost]
         [Route("clear")]
         public IActionResult Clear()
@@ -20,7 +21,6 @@ namespace FlightPlanner.Controllers
             {
                 try
                 {
-                    _context.ChangeTracker.AutoDetectChangesEnabled = false;
 
                     _context.Database.ExecuteSqlRaw("DELETE FROM Flights");
                     _context.Database.ExecuteSqlRaw("DELETE FROM Airports");
@@ -32,11 +32,7 @@ namespace FlightPlanner.Controllers
                 catch (Exception ex)
                 {
                     transaction.Rollback();
-                    return StatusCode(500);
-                }
-                finally
-                {
-                    _context.ChangeTracker.AutoDetectChangesEnabled = true;
+                    return Problem("An unexpected error occurred: " + ex.Message, statusCode: 500);
                 }
             }
         }

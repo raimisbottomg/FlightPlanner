@@ -47,7 +47,8 @@ namespace FlightPlanner.Controllers
         [Route("flights")]
         public IActionResult AddFlight(Flight flight)
         { 
-            lock( _lock) {
+            lock( _lock) 
+            {
 
                 if (FlightValidation.IsValidFlight(flight))
                 {

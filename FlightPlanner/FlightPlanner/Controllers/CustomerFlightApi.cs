@@ -69,8 +69,6 @@ namespace FlightPlanner.Controllers
                     flight.DepartureTime == req.DepartureDate
                     ).ToList();
 
-                _context.SaveChanges();
-
                 var pageResult = new FlightPageResult
                 {
                 Page = 0,
@@ -92,8 +90,6 @@ namespace FlightPlanner.Controllers
                     Include(flight => flight.To).
                     Include(flight => flight.From).
                     SingleOrDefault(flight => flight.Id == id);
-
-                _context.SaveChanges();
 
                 if (flight != null)
                 {
